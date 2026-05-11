@@ -162,35 +162,36 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);
   background:rgba(255,200,0,.38)}
 
 /* ── CHARACTER ── */
-#character{position:absolute;bottom:28%;left:22%;
+#character{position:absolute;bottom:28%;left:78%;
   transform:translateX(-50%) translateY(50%);z-index:20;
   display:flex;flex-direction:column;align-items:center;gap:2px}
 .char-fig{font-size:160px;line-height:1;
   animation:charRun .35s steps(2) infinite;
-  filter:drop-shadow(4px 5px 8px rgba(0,0,0,.55))}
-@keyframes charRun{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+  filter:drop-shadow(4px 5px 8px rgba(0,0,0,.55));
+  transform:scaleX(-1)}
+@keyframes charRun{0%,100%{transform:scaleX(-1) translateY(0)}50%{transform:scaleX(-1) translateY(-14px)}}
 .char-shadow{width:130px;height:18px;border-radius:50%;background:rgba(0,0,0,.3);
   animation:shadowPulse .35s steps(2) infinite}
 @keyframes shadowPulse{0%,100%{transform:scaleX(1);opacity:.3}50%{transform:scaleX(.8);opacity:.18}}
 
 /* ── ZOMBIE ── */
-#zombie{position:absolute;bottom:28%;left:90%;
+#zombie{position:absolute;bottom:28%;left:10%;
   transform:translateY(50%);z-index:19;
   display:flex;flex-direction:column;align-items:center;gap:2px;transition:left .4s ease}
 .zombie-fig{line-height:1;
   animation:zombieWalk .5s ease-in-out infinite;
   filter:drop-shadow(0 6px 16px rgba(0,180,0,.5)) drop-shadow(0 0 8px rgba(0,255,0,.3))}
 @keyframes zombieWalk{
-  0%{transform:scaleX(-1) translateY(0) rotate(-3deg)}
-  25%{transform:scaleX(-1) translateY(-6px) rotate(1deg)}
-  50%{transform:scaleX(-1) translateY(-12px) rotate(3deg)}
-  75%{transform:scaleX(-1) translateY(-6px) rotate(1deg)}
-  100%{transform:scaleX(-1) translateY(0) rotate(-3deg)}
+  0%{transform:translateY(0) rotate(3deg)}
+  25%{transform:translateY(-6px) rotate(-1deg)}
+  50%{transform:translateY(-12px) rotate(-3deg)}
+  75%{transform:translateY(-6px) rotate(-1deg)}
+  100%{transform:translateY(0) rotate(3deg)}
 }
 .zombie-shadow{width:130px;height:18px;border-radius:50%;background:rgba(0,0,0,.35)}
 
 /* Player name tag */
-#player-tag{position:absolute;bottom:calc(28% + 180px);left:22%;
+#player-tag{position:absolute;bottom:calc(28% + 180px);left:78%;
   transform:translateX(-50%);background:rgba(0,0,0,.62);
   border:1px solid rgba(255,215,0,.45);border-radius:8px;padding:3px 12px;
   font-size:13px;font-weight:700;color:var(--gold);z-index:22;white-space:nowrap}
@@ -210,7 +211,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);
 
 /* ── HUD ── */
 .hud{position:absolute;inset:0;z-index:40;pointer-events:none}
-.hud-top{display:flex;justify-content:flex-start;align-items:flex-start;padding:14px 18px;gap:12px}
+.hud-top{display:flex;justify-content:flex-end;align-items:flex-start;padding:14px 18px;gap:12px}
 .hud-panel{background:rgba(0,0,0,.58);border:1px solid rgba(255,215,0,.38);border-radius:12px;
   padding:8px 16px;backdrop-filter:blur(6px)}
 .hud-lbl{font-size:11px;color:rgba(255,215,0,.7);letter-spacing:2px;text-transform:uppercase;margin-bottom:1px}
@@ -218,7 +219,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);
 
 .zombie-meter-wrap{background:rgba(0,0,0,.58);border:1px solid rgba(255,60,60,.55);
   border-radius:12px;padding:10px 16px;min-width:210px;backdrop-filter:blur(6px)}
-.zombie-meter-bottom{position:absolute;bottom:14px;left:14px;z-index:45;
+.zombie-meter-bottom{position:absolute;bottom:14px;right:14px;z-index:45;
   background:rgba(0,0,0,.58);border:1px solid rgba(255,60,60,.55);
   border-radius:12px;padding:10px 16px;min-width:200px;backdrop-filter:blur(6px)}
 .zombie-meter-lbl{font-size:11px;color:#FF8080;letter-spacing:2px;text-transform:uppercase;
@@ -240,7 +241,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);
   100%{opacity:0;transform:translateX(-50%) translateY(-52px) scale(.85)}}
 
 /* ── WEBCAM OVERLAY ── */
-.cam-wrap{position:absolute;top:14px;right:14px;z-index:45;
+.cam-wrap{position:absolute;top:14px;left:14px;z-index:45;
   display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:auto}
 #game-canvas{width:280px;height:280px;border-radius:14px;
   border:2px solid rgba(255,215,0,.5);box-shadow:0 0 28px rgba(0,0,0,.6)}
@@ -518,7 +519,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);
   <!-- ZOMBIE -->
   <div id="zombie">
     <div class="zombie-fig" id="zombie-emoji">
-      <svg width="150" height="240" viewBox="-20 0 170 240" xmlns="http://www.w3.org/2000/svg">
+      <svg width="150" height="240" viewBox="-20 0 170 240" xmlns="http://www.w3.org/2000/svg" style="transform:scaleX(-1);display:block">
         <!-- 발 앞 (오른쪽, scaleX(-1) 후엔 왼쪽=앞) -->
         <ellipse cx="118" cy="232" rx="24" ry="9" fill="#1e4a12"/>
         <!-- 발 뒤 -->
@@ -989,7 +990,7 @@ function updateZombieVisual(){
   const ratio=1-Math.max(0,Math.min(1,zombieDist/ZOMBIE_MAX));
   const scale=.38+ratio*.85;
   // 오른쪽(90%)에서 사람 위치(22%) 방향으로 접근
-  const leftPct=90-ratio*68;
+  const leftPct=10+ratio*68;
   zombie.style.left=leftPct+'%';
   zombie.style.transform=`translateY(50%) scale(${scale})`;
 }
