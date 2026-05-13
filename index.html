@@ -8,9 +8,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-/* 스크롤 튕김 현상 방지 및 전체 화면 고정 */
-html,body{height:100%;height:100dvh;overflow:hidden;background:#b0b0b0;font-size:18px;overscroll-behavior:none;position:fixed;width:100%;}
-body{font-family:'Noto Sans KR',sans-serif;display:flex;justify-content:center;align-items:center}
+/* 스크롤 튕김 현상 방지 및 화면 고정 */
+html,body{
+  margin:0;padding:0;width:100%;height:100%;height:100dvh;
+  overflow:hidden;background:#b0b0b0;font-size:18px;overscroll-behavior:none;
+  -webkit-text-size-adjust:100%;
+}
+body{font-family:'Noto Sans KR',sans-serif;display:flex;justify-content:center;align-items:center;}
+
 :root{
   --bg:#F7F8FA;--white:#FFFFFF;--dark:#111111;--gray:#F0F2F5;--gray2:#E5E8EE;
   --tx:#111111;--tx2:#555555;--tx3:#999999;--border:#E0E3E9;
@@ -18,19 +23,18 @@ body{font-family:'Noto Sans KR',sans-serif;display:flex;justify-content:center;a
   --blue:#0077FF;--purple:#7B2FFF;--pink:#FF2D9B;--teal:#00BFA5;
 }
 
-/* ── 폰 컨테이너 ── */
+/* ── 데스크탑/기본 폰 컨테이너 ── */
 .phone{width:360px;height:720px;background:var(--bg);position:relative;overflow:hidden;border-radius:36px;box-shadow:0 0 0 2px #aaa,0 24px 60px rgba(0,0,0,.28);}
 
-/* 모바일 디바이스 꽉 찬 화면 대응 */
+/* ── 모바일 환경 꽉 찬 화면 대응 (가운데 정렬 해제 및 화면 고정) ── */
 @media (max-width: 500px), (max-height: 750px) {
-  html, body { background: var(--bg); position: fixed; width: 100%; height: 100%; height: 100dvh; }
-  .phone { width: 100%; height: 100%; border-radius: 0; box-shadow: none; border: none; }
+  body { display:block; position:fixed; top:0; left:0; right:0; bottom:0; height:auto; background:var(--bg); }
+  .phone { position:absolute; top:0; left:0; right:0; bottom:0; width:auto; height:auto; border-radius:0; box-shadow:none; border:none; }
 }
 
 /* ── 공통 레이아웃 ── */
 .screen{position:absolute;inset:0;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .2s;overflow:hidden;}
 .screen.active{opacity:1;pointer-events:auto}
-/* 하단 잘림 방지를 위해 padding-bottom을 넉넉하게 설정 */
 .scroll-area{flex:1;overflow-y:auto;scrollbar-width:none;padding-bottom:calc(90px + env(safe-area-inset-bottom));-webkit-overflow-scrolling:touch;}
 .scroll-area::-webkit-scrollbar{display:none}
 
@@ -45,8 +49,8 @@ body{font-family:'Noto Sans KR',sans-serif;display:flex;justify-content:center;a
 .ripple-btn::after{content:'';position:absolute;inset:0;border-radius:inherit;background:rgba(255,255,255,.4);opacity:0;transform:scale(0);transition:transform .15s,opacity .15s;}
 .ripple-btn:active::after{transform:scale(1);opacity:1;}
 
-/* ── 로그인 (스크롤 지원) ── */
-#screen-login{background:linear-gradient(155deg,#0077FF 0%,#7B2FFF 100%);padding:40px 24px 36px;justify-content:space-between;overflow-y:auto;scrollbar-width:none;}
+/* ── 로그인 ── */
+#screen-login{background:linear-gradient(155deg,#0077FF 0%,#7B2FFF 100%);padding:max(40px, calc(20px + env(safe-area-inset-top))) 24px max(36px, calc(20px + env(safe-area-inset-bottom)));justify-content:space-between;overflow-y:auto;scrollbar-width:none;}
 #screen-login::-webkit-scrollbar{display:none;}
 .lg-top{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px;min-height:200px;flex-shrink:0;}
 .lg-emoji{font-size:60px;animation:bounce 2s infinite}
@@ -81,7 +85,7 @@ body{font-family:'Noto Sans KR',sans-serif;display:flex;justify-content:center;a
 
 /* ── 홈 ── */
 #screen-home{background:var(--bg)}
-.dday-header{padding:38px 18px 0;display:flex;align-items:center;justify-content:center;gap:10px;}
+.dday-header{padding:max(38px, calc(16px + env(safe-area-inset-top))) 18px 0;display:flex;align-items:center;justify-content:center;gap:10px;}
 .dday-nav-btn{width:36px;height:36px;border-radius:9px;background:var(--white);border:1.5px solid var(--border);cursor:pointer;font-size:20px;font-weight:900;display:flex;align-items:center;justify-content:center;color:var(--tx);box-shadow:0 2px 5px rgba(0,0,0,.08);}
 .dday-nav-btn:active{transform:scale(.88)}
 .dday-center{text-align:center;flex:1}
@@ -108,7 +112,7 @@ body{font-family:'Noto Sans KR',sans-serif;display:flex;justify-content:center;a
 
 /* ── 운동탭 ── */
 #screen-exercises{background:var(--bg)}
-.tab-topbar{padding:38px 18px 10px;display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.tab-topbar{padding:max(38px, calc(16px + env(safe-area-inset-top))) 18px 10px;display:flex;align-items:center;gap:10px;flex-shrink:0;}
 .tab-topbar-title{font-size:22px;font-weight:900;color:var(--tx)}
 .body-zone-container{padding:0 14px 14px;display:flex;flex-direction:column;gap:0;}
 .body-svg-wrap{display:flex;justify-content:center;align-items:center;height:280px;flex-shrink:0;}
@@ -180,7 +184,7 @@ body{font-family:'Noto Sans KR',sans-serif;display:flex;justify-content:center;a
 
 /* ── 운동 상세 ── */
 #screen-detail{background:var(--bg)}
-.detail-topbar{padding:38px 18px 0;display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.detail-topbar{padding:max(38px, calc(16px + env(safe-area-inset-top))) 18px 0;display:flex;align-items:center;gap:10px;flex-shrink:0;}
 .detail-back-btn{width:35px;height:35px;background:var(--gray);border:none;border-radius:9px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--tx);}
 .detail-topbar-inner{flex:1}
 .detail-num{font-size:13px;font-weight:700;color:var(--tx3)}
@@ -238,7 +242,7 @@ body{font-family:'Noto Sans KR',sans-serif;display:flex;justify-content:center;a
 .ov-btn-main{width:100%;padding:15px;background:var(--blue);color:#fff;border:none;border-radius:12px;font-size:18px;font-weight:900;font-family:inherit;cursor:pointer;margin-bottom:9px;}
 .ov-btn-sub{width:100%;padding:11px;background:transparent;color:var(--tx3);border:2px solid var(--border);border-radius:11px;font-size:18px;font-weight:700;font-family:inherit;cursor:pointer;}
 
-/* ── 축하 화면 (스크롤 지원) ── */
+/* ── 축하 화면 ── */
 #screen-congrats{background:linear-gradient(155deg,var(--green),#0077FF);padding:50px 28px;justify-content:center;align-items:center;gap:18px;text-align:center;overflow-y:auto;scrollbar-width:none;}
 #screen-congrats::-webkit-scrollbar{display:none;}
 .cg-emoji{font-size:68px;animation:bounce 2s infinite;flex-shrink:0;}
