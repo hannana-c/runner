@@ -96,20 +96,20 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);
   box-shadow:0 0 60px rgba(255,165,0,.14);position:relative;z-index:10}
 .tut-title{font-family:'Bebas Neue',cursive;font-size:34px;color:var(--gold);letter-spacing:4px}
 .tut-desc{background:rgba(255,215,0,.1);border-left:4px solid var(--gold);border-radius:8px;
-  padding:16px 22px;color:var(--cream);font-size:22px;line-height:1.85;text-align:center;width:100%} /* 수정: 17px -> 22px */
+  padding:16px 22px;color:var(--cream);font-size:17px;line-height:1.85;text-align:center;width:100%}
 .tut-poses{display:flex;gap:32px;align-items:center}
 .pose-item{display:flex;flex-direction:column;align-items:center;gap:6px}
 .pose-icon{font-size:56px;line-height:1}
 .pose-lbl{font-size:13px;color:rgba(255,255,255,.65);text-align:center;line-height:1.4}
 .pose-arrow{font-size:28px;color:var(--gold);font-weight:900}
-.cam-row{display:flex;align-items:center;gap:12px;font-size:20px;color:rgba(255,255,255,.7);font-weight:700;} /* 수정: 14px -> 20px, 폰트 굵기 추가 */
+.cam-row{display:flex;align-items:center;gap:12px;font-size:14px;color:rgba(255,255,255,.7)}
 .cam-dot{width:10px;height:10px;border-radius:50%;background:#555;flex-shrink:0;transition:background .3s}
 .cam-dot.ok{background:var(--green);animation:dotBlink 1.2s infinite}
 .cam-dot.err{background:var(--danger)}
 @keyframes dotBlink{0%,100%{opacity:1}50%{opacity:.3}}
 #tut-canvas{border-radius:12px;border:2px solid rgba(255,215,0,.35);display:none}
 .tut-tip{background:rgba(255,80,0,.15);border:1px solid rgba(255,80,0,.4);border-radius:8px;
-  padding:12px 20px;color:#FF9A42;font-size:18px;text-align:center;line-height:1.6} /* 수정: 14px -> 18px */
+  padding:12px 20px;color:#FF9A42;font-size:14px;text-align:center;line-height:1.6}
 
 /* ─────────────────────────────────────────
    COUNTDOWN OVERLAY
@@ -129,6 +129,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);
 
 /* ─────────────────────────────────────────
    GAME SCREEN
+   ★ 수정: position:relative 제거 → .screen의 position:fixed 상속
 ───────────────────────────────────────── */
 #s-game{overflow:hidden}
 
@@ -245,7 +246,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);
 #game-canvas{width:280px;height:280px;border-radius:14px;
   border:2px solid rgba(255,215,0,.5);box-shadow:0 0 28px rgba(0,0,0,.6)}
 .pose-badge{background:rgba(0,0,0,.72);border:1px solid rgba(255,215,0,.32);
-  border-radius:8px;padding:5px 14px;font-size:20px;font-weight:700; /* 수정: 14px -> 20px */
+  border-radius:8px;padding:5px 14px;font-size:14px;font-weight:700;
   color:var(--cream);letter-spacing:1px;text-align:center;width:280px}
 .cd-bar-wrap{width:280px;height:8px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden}
 .cd-bar{height:100%;background:var(--gold);border-radius:4px;transition:width .1s linear}
@@ -315,6 +316,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);
 </head>
 <body>
 
+<!-- ─────────────── INTRO ─────────────── -->
 <div id="s-intro" class="screen active">
   <div class="intro-sun"></div>
 
@@ -359,12 +361,14 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);
   </div>
 </div>
 
+<!-- ─────────────── TUTORIAL ─────────────── -->
 <div id="s-tutorial" class="screen">
   <div class="tut-card">
     <div class="tut-title">🧟 좀비가 온다! 런지로 달려!</div>
 
     <div class="tut-desc">
-      <strong style="color:var(--gold);font-size:24px">🏋️ 운동 동작 안내</strong><br><br> <strong>한 손으로 조리대 높이의 난간을 잡고<br>
+      <strong style="color:var(--gold);font-size:18px">🏋️ 운동 동작 안내</strong><br><br>
+      <strong>한 손으로 조리대 높이의 난간을 잡고<br>
       한 발을 앞으로 내딛어 런지합니다.</strong><br><br>
       📸 카메라 앞에서 준비자세를 취해주세요!
     </div>
@@ -387,11 +391,13 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);
   </div>
 </div>
 
+<!-- ─────────────── GAME ─────────────── -->
 <div id="s-game" class="screen">
   <div class="world" id="game-world">
     <div class="sky-layer"></div>
     <div class="game-sun"></div>
 
+    <!-- FAR RUINS -->
     <div class="ruins-far">
       <svg width="200%" height="100%" viewBox="0 0 2400 220" preserveAspectRatio="none">
         <g fill="#7D3500" opacity=".65">
@@ -441,6 +447,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);
       </svg>
     </div>
 
+    <!-- MID RUINS -->
     <div class="ruins-mid">
       <svg width="200%" height="100%" viewBox="0 0 2400 170" preserveAspectRatio="none">
         <g fill="#5C2800" opacity=".85">
@@ -484,6 +491,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);
       </svg>
     </div>
 
+    <!-- GROUND -->
     <div class="ground-layer">
       <div class="ground-scroll">
         <div class="road-line" style="left:3%;width:72px"></div>
@@ -501,65 +509,93 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);
     <div class="boost-flash" id="bflash"></div>
   </div>
 
+  <!-- CHARACTER -->
   <div id="character">
     <div class="char-fig" id="char-emoji">🏃</div>
     <div class="char-shadow"></div>
   </div>
   <div id="player-tag">Player</div>
 
+  <!-- ZOMBIE -->
   <div id="zombie">
     <div class="zombie-fig" id="zombie-emoji">
       <svg width="150" height="240" viewBox="-20 0 170 240" xmlns="http://www.w3.org/2000/svg" style="transform:scaleX(-1);display:block">
+        <!-- 발 앞 (오른쪽, scaleX(-1) 후엔 왼쪽=앞) -->
         <ellipse cx="118" cy="232" rx="24" ry="9" fill="#1e4a12"/>
+        <!-- 발 뒤 -->
         <ellipse cx="55" cy="236" rx="19" ry="8" fill="#1e4a12"/>
+        <!-- 앞다리 (구부러진, 성큼성큼) -->
         <path d="M88 158 Q118 188 116 233" stroke="#2e6e1e" stroke-width="30" fill="none" stroke-linecap="round"/>
+        <!-- 뒷다리 -->
         <rect x="40" y="156" width="28" height="80" fill="#2e6e1e" rx="9"/>
+        <!-- 찢어진 바지 흔적 -->
         <path d="M40 156 L50 180 L58 156" fill="#0e2a0a" opacity="0.7"/>
         <path d="M88 156 L98 178 L106 156" fill="#0e2a0a" opacity="0.7"/>
+        <!-- 몸통 -->
         <rect x="28" y="88" width="88" height="74" fill="#3c8228" rx="12"/>
+        <!-- 찢어진 옷 음영 -->
         <path d="M28 120 Q42 108 50 128 Q62 110 72 130 Q84 108 96 130 Q108 108 116 124" fill="#1a3e0e" opacity="0.6"/>
+        <!-- 피 (몸통) -->
         <path d="M50 93 Q55 118 45 138" stroke="#cc0000" stroke-width="3" fill="none"/>
         <circle cx="45" cy="138" r="5" fill="#cc0000"/>
         <path d="M52 93 Q54 105 50 112" stroke="#aa0000" stroke-width="2" fill="none" opacity="0.7"/>
+        <!-- 앞팔 (오른쪽=뻗은팔, scaleX(-1) 후엔 왼쪽) -->
         <path d="M116 100 Q145 93 160 98" stroke="#2e6e1e" stroke-width="26" fill="none" stroke-linecap="round"/>
+        <!-- 앞손 손톱 -->
         <line x1="158" y1="98" x2="170" y2="88" stroke="#1a4a0e" stroke-width="6" stroke-linecap="round"/>
         <line x1="158" y1="98" x2="172" y2="98" stroke="#1a4a0e" stroke-width="6" stroke-linecap="round"/>
         <line x1="158" y1="98" x2="168" y2="110" stroke="#1a4a0e" stroke-width="6" stroke-linecap="round"/>
         <line x1="158" y1="98" x2="165" y2="118" stroke="#1a4a0e" stroke-width="5" stroke-linecap="round"/>
+        <!-- 뒷팔 (왼쪽, 아래로 늘어뜨림) -->
         <path d="M28 102 Q10 122 14 145" stroke="#2e6e1e" stroke-width="22" fill="none" stroke-linecap="round"/>
+        <!-- 목 -->
         <rect x="50" y="70" width="44" height="22" fill="#2e6e1e" rx="6"/>
+        <!-- 머리 -->
         <ellipse cx="72" cy="42" rx="45" ry="50" fill="#4aa030"/>
+        <!-- 머리 핏자국 -->
         <path d="M82 2 Q88 18 82 35" stroke="#cc0000" stroke-width="3" fill="none"/>
         <circle cx="82" cy="35" r="4" fill="#cc0000"/>
+        <!-- 두개골 균열 -->
         <path d="M58 5 Q60 20 55 36" stroke="#1e5010" stroke-width="2" fill="none" opacity="0.8"/>
         <path d="M48 14 Q55 20 60 30" stroke="#1e5010" stroke-width="1.5" fill="none" opacity="0.6"/>
+        <!-- 눈 왼쪽 -->
         <ellipse cx="52" cy="35" rx="14" ry="17" fill="#ff1500"/>
         <ellipse cx="52" cy="37" rx="8" ry="9" fill="#880000"/>
         <ellipse cx="49" cy="33" rx="3.5" ry="3.5" fill="#ff5522" opacity="0.8"/>
         <ellipse cx="57" cy="30" rx="1.5" ry="2" fill="white" opacity="0.6"/>
+        <!-- 눈 오른쪽 -->
         <ellipse cx="92" cy="35" rx="14" ry="17" fill="#ff1500"/>
         <ellipse cx="92" cy="37" rx="8" ry="9" fill="#880000"/>
         <ellipse cx="89" cy="33" rx="3.5" ry="3.5" fill="#ff5522" opacity="0.8"/>
         <ellipse cx="97" cy="30" rx="1.5" ry="2" fill="white" opacity="0.6"/>
+        <!-- 코 (뭉개짐) -->
         <circle cx="66" cy="52" r="4" fill="#1a4a0e"/>
         <circle cx="78" cy="52" r="4" fill="#1a4a0e"/>
+        <!-- 입 (크게 벌림) -->
         <path d="M34 66 Q52 90 72 88 Q92 90 110 66" fill="#080200"/>
+        <!-- 이빨 위 -->
         <rect x="40" y="65" width="9" height="16" fill="#cccca8" rx="2"/>
         <rect x="52" y="64" width="10" height="18" fill="#cccca8" rx="2"/>
         <rect x="65" y="64" width="10" height="17" fill="#cccca8" rx="2"/>
         <rect x="78" y="65" width="9" height="15" fill="#cccca8" rx="2"/>
         <rect x="89" y="66" width="8" height="13" fill="#cccca8" rx="2"/>
+        <!-- 깨진 이빨 -->
         <path d="M52 64 L58 74 L62 64" fill="#080200"/>
+        <!-- 피 (입술) -->
         <path d="M34 66 Q38 70 43 68" stroke="#aa0000" stroke-width="2" fill="none"/>
+        <!-- 혀 (길게 나옴) -->
         <path d="M52 85 Q65 100 78 88 Q72 95 65 100 Q58 95 52 85" fill="#cc1133"/>
+        <!-- 귀 -->
         <ellipse cx="27" cy="42" rx="9" ry="11" fill="#3a9020"/>
         <ellipse cx="117" cy="42" rx="9" ry="11" fill="#3a9020"/>
+        <!-- 귀 피 -->
         <path d="M27 38 Q26 44 28 50" stroke="#cc0000" stroke-width="2" fill="none" opacity="0.7"/>
       </svg>
     </div>
     <div class="zombie-shadow"></div>
   </div>
 
+  <!-- HUD -->
   <div class="hud">
     <div class="hud-top">
       <div class="hud-panel">
@@ -584,6 +620,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);
     <div class="boost-notif" id="bnotif">🔥 LUNGE BOOST +5m!</div>
   </div>
 
+  <!-- WEBCAM -->
   <div class="cam-wrap">
     <canvas id="game-canvas" width="280" height="280"></canvas>
     <div class="pose-badge" id="pbadge">인식 대기 중...</div>
@@ -591,6 +628,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);
   </div>
 </div>
 
+<!-- ─────────────── GAME OVER ─────────────── -->
 <div id="s-gameover" class="screen">
   <div class="go-wrap">
     <div class="go-title">GAME OVER</div>
@@ -615,6 +653,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);
   </div>
 </div>
 
+<!-- COUNTDOWN OVERLAY -->
 <div id="countdown-overlay">
   <div class="cnt-num" id="cnt-num">3</div>
   <div class="cnt-lbl">준비하세요...</div>
